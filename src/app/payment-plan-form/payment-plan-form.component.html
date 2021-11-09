@@ -1,0 +1,8 @@
+<div class="form-group">
+  <label for="paymentFrequency">Payment Frequency:</label>
+  <select class="form-control" id="paymentFrequency" required>
+    <option *ngFor="let freq of paymentFrequency" [value]="freq">
+      {{ freq }}
+    </option>
+  </select>
+</div>

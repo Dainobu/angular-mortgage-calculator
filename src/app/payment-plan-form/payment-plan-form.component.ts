@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payment-plan-form.component.css'],
 })
 export class PaymentPlanFormComponent implements OnInit {
-  paymentFrequence = [
+  paymentFrequency = [
     'Accelerated Weekly',
     'Weekly',
     'Accelerated Bi-weekly',
