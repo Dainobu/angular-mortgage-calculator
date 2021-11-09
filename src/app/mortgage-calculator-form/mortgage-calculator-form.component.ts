@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentPlanInput } from '../payment-plan-input';
+import { UserInput } from '../user-input';
 
 @Component({
-  selector: 'app-payment-plan-form',
-  templateUrl: './payment-plan-form.component.html',
-  styleUrls: ['./payment-plan-form.component.css'],
+  selector: 'app-mortgage-calculator-form',
+  templateUrl: './mortgage-calculator-form.component.html',
+  styleUrls: ['./mortgage-calculator-form.component.css'],
 })
-export class PaymentPlanFormComponent implements OnInit {
+export class MortgageCalculatorFormComponent implements OnInit {
   amortizationPeriodYears = [
     '',
     '1 Year',
@@ -78,14 +78,25 @@ export class PaymentPlanFormComponent implements OnInit {
     '10 Years',
   ];
 
-  model = new PaymentPlanInput(
+  prepaymentFrequencies = ['One time', 'Each year', 'Same as regular payment'];
+
+  model = new UserInput(
     100000.0,
     5.0,
     '25 Years',
     '',
     'Monthly (12x per year)',
-    '5 Years'
+    '5 Years',
+    0.0,
+    'One time',
+    1
   );
+
+  submitted = false;
+
+  onSubmit() {
+    this.submitted = true;
+  }
 
   constructor() {}
 

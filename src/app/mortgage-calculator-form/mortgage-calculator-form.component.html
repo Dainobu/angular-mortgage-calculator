@@ -1,0 +1,112 @@
+<div class="form-group">
+  <label for="mortgageAmount">Mortgage Amount:</label>
+  <input
+    type="text"
+    class="form-control"
+    id="mortgageAmount"
+    required
+    [(ngModel)]="model.mortgageAmount"
+  />
+</div>
+
+<div class="form-group">
+  <label for="interestRate">Interest Rate:</label>
+  <input
+    type="text"
+    class="form-control"
+    id="interestRate"
+    required
+    [(ngModel)]="model.interestRate"
+  />
+</div>
+
+<div class="form-group">
+  <label for="amortizationPeriodYear">Amortization Period:</label>
+  <select
+    class="form-control"
+    id="amortizationPeriodYear"
+    required
+    [(ngModel)]="model.amortizationPeriodYears"
+  >
+    <option *ngFor="let amorYear of amortizationPeriodYears" [value]="amorYear">
+      {{ amorYear }}
+    </option>
+  </select>
+  <select
+    class="form-control"
+    id="amortizationPeriodMonth"
+    required
+    [(ngModel)]="model.amortizationPeriodMonths"
+  >
+    <option
+      *ngFor="let amorMonth of amortizationPeriodMonths"
+      [value]="amorMonth"
+    >
+      {{ amorMonth }}
+    </option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="paymentFrequency">Payment Frequency:</label>
+  <select
+    class="form-control"
+    id="paymentFrequency"
+    required
+    [(ngModel)]="model.paymentFrequency"
+  >
+    <option *ngFor="let payFreq of paymentFrequencies" [value]="payFreq">
+      {{ payFreq }}
+    </option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="term">Term:</label>
+  <select class="form-control" id="term" required [(ngModel)]="model.term">
+    <option *ngFor="let t of terms" [value]="t">
+      {{ t }}
+    </option>
+  </select>
+</div>
+
+<hr />
+
+<div class="form-group">
+  <label for="prepaymentAmount">Prepayment Amount:</label>
+  <input
+    type="text"
+    class="form-control"
+    id="prepaymentAmount"
+    required
+    [(ngModel)]="model.prepaymentAmount"
+  />
+</div>
+
+<div class="form-group">
+  <label for="prepaymentFrequency">Prepayment Frequency:</label>
+  <select
+    class="form-control"
+    id="prepaymentFrequency"
+    required
+    [(ngModel)]="model.prepaymentFrequency"
+  >
+    <option
+      *ngFor="let prepayFreq of prepaymentFrequencies"
+      [value]="prepayFreq"
+    >
+      {{ prepayFreq }}
+    </option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="startWithPayment">Start with Payment:</label>
+  <input
+    type="text"
+    class="form-control"
+    id="startWithPayment"
+    required
+    [(ngModel)]="model.startWithPayment"
+  />
+</div>
