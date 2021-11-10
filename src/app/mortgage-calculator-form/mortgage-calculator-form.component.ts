@@ -102,8 +102,8 @@ export class MortgageCalculatorFormComponent implements OnInit {
 
     this.mortgagePayment =
       this.model.mortgageAmount *
-      ((this.annualInterestRate * this.subCalculation) / (this.subCalculation - 1));
-    //Payment = P x (r / n) x (1 + r / n)^n(t)] / (1 + r / n)^n(t) - 1
+      ((this.annualInterestRate * this.subCalculation) /
+        (this.subCalculation - 1));
   }
 
   constructor() {}
