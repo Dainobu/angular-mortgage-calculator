@@ -141,6 +141,23 @@
 
 <hr />
 
-Number of Payments {{ numberOfPayments }}
+<div [hidden]="!submitted">
+  <div class="container">
+    <h1>Calculation Summary</h1>
+    <table>
+      <tr>
+        <th>Category</th>
+        <th>Term</th>
+      </tr>
+      <tr>
+        <td>Number of Payments</td>
+        <td>{{ numberOfPayments }}</td>
+      </tr>
 
-
+      <tr>
+        <td>Mortgage Payment</td>
+        <td>{{ mortgagePayment }}</td>
+      </tr>
+    </table>
+  </div>
+</div>

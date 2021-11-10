@@ -79,17 +79,31 @@ export class MortgageCalculatorFormComponent implements OnInit {
     'One time',
     1
   );
-  
+
   submitted = false;
 
-  numberOfPayments = this.model.paymentFrequency * this.model.term;
-
+  numberOfPayments;
+  annualInterestRate;
+  subCalculation;
+  mortgagePayment;
 
   onSubmit() {
     this.submitted = true;
-    
+
     this.numberOfPayments = this.model.paymentFrequency * this.model.term;
-  
+
+    this.annualInterestRate =
+      this.model.interestRate / 100 / this.model.paymentFrequency;
+
+    this.subCalculation = Math.pow(
+      1 + this.annualInterestRate,
+      this.numberOfPayments
+    );
+
+    this.mortgagePayment =
+      this.model.mortgageAmount *
+      ((this.annualInterestRate * this.subCalculation) / (this.subCalculation - 1));
+    //Payment = P x (r / n) x (1 + r / n)^n(t)] / (1 + r / n)^n(t) - 1
   }
 
   constructor() {}
