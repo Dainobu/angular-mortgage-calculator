@@ -25,35 +25,30 @@
       />
     </div>
 
-    <!-- <div class="form-group">
-        <label for="amortizationPeriodYear">Amortization Period:</label>
-        <select
-          class="form-control"
-          id="amortizationPeriodYear"
-          required
-          [(ngModel)]="model.amortizationPeriodYears"
-        >
-          <option
-            *ngFor="let amorYear of amortizationPeriodYears"
-            [value]="amorYear"
-          >
-            {{ amorYear }}
-          </option>
-        </select>
-        <select
-          class="form-control"
-          id="amortizationPeriodMonth"
-          required
-          [(ngModel)]="model.amortizationPeriodMonths"
-        >
-          <option
-            *ngFor="let amorMonth of amortizationPeriodMonths"
-            [value]="amorMonth"
-          >
-            {{ amorMonth }}
-          </option>
-        </select>
-      </div> -->
+    <div class="form-group">
+      <label for="amortizationPeriodYear">Amortization Period:</label>
+      <select
+        class="form-control"
+        id="amortizationPeriodYear"
+        required
+        [(ngModel)]="model.amortizationPeriodYears"
+        name="amortizationPeriodYear"
+      >
+        <option *ngFor="let amorYear of amortYearKeys" [value]="amorYear">
+          {{ amortizationPeriodYears[amorYear] }}
+        </option>
+      </select>
+      <!-- <select
+        class="form-control"
+        id="amortizationPeriodMonth"
+        [(ngModel)]="model.amortizationPeriodMonths"
+        name="amortizationPeriodMonth"
+      >
+        <option *ngFor="let amorMonth of amortMonthKeys" [value]="amorMonth">
+          {{ amortizationPeriodMonths[amorMonth] }}
+        </option>
+      </select> -->
+    </div>
 
     <div class="form-group">
       <label for="paymentFrequency">Payment Frequency:</label>
@@ -90,7 +85,7 @@
       class="btn btn-success"
       [disabled]="!mortgageCalculatorForm.form.valid"
     >
-      Submit
+      Calculate ...
     </button>
   </form>
 </div>
@@ -148,15 +143,32 @@
       <tr>
         <th>Category</th>
         <th>Term</th>
+        <th>Amortization Period</th>
       </tr>
       <tr>
         <td>Number of Payments</td>
-        <td>{{ numberOfPayments }}</td>
+        <td>{{ numberOfPaymentsTerm }}</td>
+        <td>{{ numberOfPaymentsAP }}</td>
       </tr>
-
       <tr>
         <td>Mortgage Payment</td>
-        <td>{{ mortgagePayment }}</td>
+        <td>{{ mortgagePayment | currency }}</td>
+        <td>{{ mortgagePayment | currency }}</td>
+      </tr>
+      <tr>
+        <td>Principal Payments</td>
+        <!-- <td>{{ mortgagePayment | currency }}</td> -->
+        <!-- <td>{{ mortgagePayment | currency }}</td> -->
+      </tr>
+      <tr>
+        <td>Interest Payments</td>
+        <!-- <td>{{ mortgagePayment | currency }}</td> -->
+        <!-- <td>{{ mortgagePayment | currency }}</td> -->
+      </tr>
+      <tr>
+        <td>Total Cost</td>
+        <!-- <td>{{ mortgagePayment | currency }}</td>
+        <td>{{ mortgagePayment | currency }}</td> -->
       </tr>
     </table>
   </div>
