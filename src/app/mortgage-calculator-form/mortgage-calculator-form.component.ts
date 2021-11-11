@@ -43,6 +43,7 @@ export class MortgageCalculatorFormComponent implements OnInit {
   principalPaymentsTerm;
   principalPaymentsAP;
 
+  interestPaymentsAP;
   totalCostTerm;
   totalCostAP;
 
@@ -76,11 +77,14 @@ export class MortgageCalculatorFormComponent implements OnInit {
 
     this.totalCostTerm = this.numberOfPaymentsTerm * this.mortgagePayment;
 
-    this.frequencyString = this.paymentFrequencies[this.model.paymentFrequency];
-
     this.totalCostAP = this.numberOfPaymentsAP * this.mortgagePayment;
 
+    this.interestPaymentsAP = this.totalCostAP - this.principalPaymentsAP;
+
+    this.frequencyString = this.paymentFrequencies[this.model.paymentFrequency];
+
     this.APYears = this.model.amortizationPeriodYears;
+
     this.termYears = this.model.term;
   }
 

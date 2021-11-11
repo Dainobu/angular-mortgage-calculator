@@ -158,13 +158,12 @@
       <tr>
         <td>Principal Payments</td>
         <td></td>
-        <!-- <td>{{ mortgagePayment | currency }}</td> -->
         <td>{{ principalPaymentsAP | currency }}</td>
       </tr>
       <tr>
         <td>Interest Payments</td>
-        <!-- <td>{{ mortgagePayment | currency }}</td> -->
-        <!-- <td>{{ mortgagePayment | currency }}</td> -->
+        <td></td>
+        <td>{{ interestPaymentsAP | currency }}</td>
       </tr>
       <tr>
         <td>Total Cost</td>
@@ -189,7 +188,9 @@
       </li>
       <li>
         have paid <b>{{ principalPaymentsAP | currency }}</b> in principal,
-        <b>[TODO]</b> in interest, for a total of <b>[TODO]</b>.
+        <b>{{ interestPaymentsAP | currency }}</b> in interest, for a total of
+        <b>{{ totalCostAP | currency }}</b
+        >.
       </li>
     </ul>
     <div>Over the {{ termYears }}-year term, you will:</div>
@@ -202,7 +203,8 @@
       </li>
       <li>
         have paid <b>[TODO]</b> in principal, <b>[TODO]</b> in interest, for a
-        total of <b>[TODO]</b>.
+        total of <b>{{ totalCostTerm | currency }}</b
+        >.
       </li>
     </ul>
     <div>At the end of your {{ termYears }}-year term, you will:</div>
