@@ -173,4 +173,41 @@
       </tr>
     </table>
   </div>
+
+  <br />
+  <br />
+
+  <div class="container">
+    <h1>Mortgage Summary</h1>
+    <div>Over the {{ APYears }}-year amortization period, you will:</div>
+    <ul>
+      <li>
+        have made <b>{{ numberOfPaymentsAP }}</b>
+        {{ frequencyString | lowercase }} payments of
+        <b>{{ mortgagePayment | currency }}</b
+        >.
+      </li>
+      <li>
+        have paid <b>{{ principalPaymentsAP | currency }}</b> in principal,
+        <b>[TODO]</b> in interest, for a total of <b>[TODO]</b>.
+      </li>
+    </ul>
+    <div>Over the {{ termYears }}-year term, you will:</div>
+    <ul>
+      <li>
+        have made <b>{{ numberOfPaymentsTerm }}</b>
+        {{ frequencyString | lowercase }} payments of
+        <b>{{ mortgagePayment | currency }}</b
+        >.
+      </li>
+      <li>
+        have paid <b>[TODO]</b> in principal, <b>[TODO]</b> in interest, for a
+        total of <b>[TODO]</b>.
+      </li>
+    </ul>
+    <div>At the end of your {{ termYears }}-year term, you will:</div>
+    <ul>
+      <li>have a balance of <b>[TODO]</b>.</li>
+    </ul>
+  </div>
 </div>
