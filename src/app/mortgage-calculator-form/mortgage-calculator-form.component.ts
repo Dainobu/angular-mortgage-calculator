@@ -40,6 +40,11 @@ export class MortgageCalculatorFormComponent implements OnInit {
   annualInterestRate;
   subCalculation;
   mortgagePayment;
+  principalPaymentsTerm;
+  principalPaymentsAP;
+
+  totalCostTerm;
+  totalCostAP;
 
   onSubmit() {
     this.submitted = true;
@@ -61,6 +66,12 @@ export class MortgageCalculatorFormComponent implements OnInit {
       this.model.mortgageAmount *
       ((this.annualInterestRate * this.subCalculation) /
         (this.subCalculation - 1));
+
+    this.principalPaymentsAP = this.model.mortgageAmount;
+
+    this.totalCostTerm = this.numberOfPaymentsTerm * this.mortgagePayment;
+
+    this.totalCostAP = this.numberOfPaymentsAP * this.mortgagePayment;
   }
 
   constructor() {}
