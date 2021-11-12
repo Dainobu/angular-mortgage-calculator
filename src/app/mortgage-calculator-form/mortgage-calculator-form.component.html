@@ -73,7 +73,7 @@
         required
         [(ngModel)]="model.amortizationPeriodYears"
         name="amortizationPeriodYear"
-        (click)="updateTermKeys()"
+        (click)="updateTermOptions()"
       >
         <option *ngFor="let amorYear of amortYearKeys" [value]="amorYear">
           {{ amortizationPeriodYears[amorYear] }}
@@ -105,7 +105,7 @@
         [(ngModel)]="model.term"
         name="term"
       >
-        <option *ngFor="let ter of termKeys" [value]="ter">
+        <option *ngFor="let ter of termOptions" [value]="ter">
           {{ terms[ter] }}
         </option>
       </select>
@@ -129,50 +129,6 @@
     </button>
   </form>
 </div>
-
-<!-- <hr />
-
-<div class="container">
-  <h1>Prepayment Plan</h1>
-  <div class="form-group">
-    <label for="prepaymentAmount">Prepayment Amount:</label>
-    <input
-      type="text"
-      class="form-control"
-      id="prepaymentAmount"
-      required
-      [(ngModel)]="model.prepaymentAmount"
-    />
-  </div>
-
-  <div class="form-group">
-    <label for="prepaymentFrequency">Prepayment Frequency:</label>
-    <select
-      class="form-control"
-      id="prepaymentFrequency"
-      required
-      [(ngModel)]="model.prepaymentFrequency"
-    >
-      <option
-        *ngFor="let prepayFreq of prepaymentFrequencies"
-        [value]="prepayFreq"
-      >
-        {{ prepayFreq }}
-      </option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label for="startWithPayment">Start with Payment:</label>
-    <input
-      type="text"
-      class="form-control"
-      id="startWithPayment"
-      required
-      [(ngModel)]="model.startWithPayment"
-    />
-  </div>
-</div> -->
 
 <br /><br />
 

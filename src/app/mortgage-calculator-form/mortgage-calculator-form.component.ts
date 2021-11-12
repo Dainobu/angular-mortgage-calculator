@@ -12,29 +12,23 @@ import { AmortizationPeriodYears } from '../amortization-period-years.enum';
 })
 export class MortgageCalculatorFormComponent implements OnInit {
   amortizationPeriodYears = AmortizationPeriodYears;
-  amortYearKeys = Object.keys(AmortizationPeriodYears).filter(
-    (f) => !isNaN(Number(f))
-  );
+  amortYearKeys = this.getKeys(this.amortizationPeriodYears);
 
   paymentFrequencies = PaymentFrequencies;
-  payFreqKeys = Object.keys(PaymentFrequencies).filter(
-    (f) => !isNaN(Number(f))
-  );
+  payFreqKeys = this.getKeys(this.paymentFrequencies);
 
   terms = Terms;
-  termKeys = Object.keys(Terms).filter((f) => !isNaN(Number(f)));
+  termOptions = this.getKeys(this.terms);
 
-  prepaymentFrequencies = ['One time', 'Each year', 'Same as regular payment'];
-
-  model = new UserInput(100000.0, 5.0, 25, 0, 12, 5, 0.0, 'One time', 1);
+  model = new UserInput(100000.0, 5.0, 25, 0, 12, 5, 0.0, 1);
 
   submitted = false;
 
   numberOfPaymentsTerm;
   numberOfPaymentsAP;
-  annualInterestRate;
-  subCalculationAPPayments;
-  subCalculationTermPayments;
+  frequencyInterestRate;
+  subCalculationAAPPayments;
+  subCalculationB;
   mortgagePayment;
   termEndBalance;
   principalPaymentsTerm;
@@ -43,14 +37,16 @@ export class MortgageCalculatorFormComponent implements OnInit {
   interestPaymentsAP;
   totalCostTerm;
   totalCostAP;
-
   frequencyString;
-
   APYears;
   termYears;
 
-  updateTermKeys() {
-    this.termKeys = Object.keys(Terms).filter(
+  getKeys(enumName) {
+    return Object.keys(enumName).filter((f) => !isNaN(Number(f)));
+  }
+
+  updateTermOptions() {
+    this.termOptions = Object.keys(Terms).filter(
       (f) =>
         !isNaN(Number(f)) && Number(f) <= this.model.amortizationPeriodYears
     );
@@ -62,56 +58,157 @@ export class MortgageCalculatorFormComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.calculateResult();
+  }
 
-    this.numberOfPaymentsTerm = this.model.paymentFrequency * this.model.term;
+  calculateResult() {
+    this.numberOfPaymentsTerm = this.calculateNumberOfPayments(
+      this.model.paymentFrequency,
+      this.model.term
+    );
 
-    this.numberOfPaymentsAP =
-      this.model.paymentFrequency * this.model.amortizationPeriodYears;
+    this.numberOfPaymentsAP = this.calculateNumberOfPayments(
+      this.model.paymentFrequency,
+      this.model.amortizationPeriodYears
+    );
 
-    this.annualInterestRate =
-      this.model.interestRate / 100 / this.model.paymentFrequency;
+    this.frequencyInterestRate = this.calculateFrequencyInterestRate(
+      this.model.interestRate,
+      this.model.paymentFrequency
+    );
 
-    this.subCalculationAPPayments = this.calculateSubCalculation(
+    this.subCalculationAAPPayments = this.calculateSubCalculationA(
+      this.frequencyInterestRate,
       this.numberOfPaymentsAP
     );
 
-    this.subCalculationTermPayments = this.calculateSubCalculation(
-      this.numberOfPaymentsTerm
+    this.subCalculationB = this.calculateSubCalculationB(
+      this.subCalculationAAPPayments
     );
 
-    this.mortgagePayment =
-      this.model.mortgageAmount *
-      ((this.annualInterestRate * this.subCalculationAPPayments) /
-        (this.subCalculationAPPayments - 1));
+    this.mortgagePayment = this.calculateMortgagePayment(
+      this.model.mortgageAmount,
+      this.frequencyInterestRate,
+      this.subCalculationAAPPayments,
+      this.subCalculationB
+    );
 
-    this.termEndBalance =
-      (this.model.mortgageAmount *
-        (this.subCalculationAPPayments - this.subCalculationTermPayments)) /
-      (this.subCalculationAPPayments - 1);
+    this.termEndBalance = this.calculateEndTermBalance(
+      this.model.mortgageAmount,
+      this.subCalculationAAPPayments,
+      this.frequencyInterestRate,
+      this.numberOfPaymentsTerm,
+      this.subCalculationB
+    );
 
-    this.principalPaymentsTerm =
-      this.model.mortgageAmount - this.termEndBalance;
+    this.principalPaymentsTerm = this.calculatePrincipalPayment(
+      this.model.mortgageAmount,
+      this.termEndBalance
+    );
 
-    this.principalPaymentsAP = this.model.mortgageAmount;
+    this.principalPaymentsAP = this.calculatePrincipalPayment(
+      this.model.mortgageAmount,
+      0
+    );
 
-    this.totalCostTerm = this.numberOfPaymentsTerm * this.mortgagePayment;
+    this.totalCostTerm = this.calculateTotalCost(
+      this.numberOfPaymentsTerm,
+      this.mortgagePayment
+    );
 
-    this.totalCostAP = this.numberOfPaymentsAP * this.mortgagePayment;
+    this.totalCostAP = this.calculateTotalCost(
+      this.numberOfPaymentsAP,
+      this.mortgagePayment
+    );
 
-    this.interestPaymentsTerm = this.totalCostTerm - this.principalPaymentsTerm;
+    this.interestPaymentsTerm = this.calculateInterestPayment(
+      this.totalCostTerm,
+      this.principalPaymentsTerm
+    );
 
-    this.interestPaymentsAP = this.totalCostAP - this.principalPaymentsAP;
+    this.interestPaymentsAP = this.calculateInterestPayment(
+      this.totalCostAP,
+      this.principalPaymentsAP
+    );
 
-    this.frequencyString = this.paymentFrequencies[this.model.paymentFrequency];
+    this.frequencyString = this.getInputtedPaymentFrequencyKey();
 
-    this.APYears = this.model.amortizationPeriodYears;
+    this.APYears = this.getInputtedAmortizationPeriod();
 
-    this.termYears = this.model.term;
+    this.termYears = this.getInputtedTerm();
+  }
+
+  calculateNumberOfPayments(paymentFrequency, numberOfYears) {
+    return paymentFrequency * numberOfYears;
+  }
+
+  calculateFrequencyInterestRate(interestRatePercentValue, paymentFrequency) {
+    return interestRatePercentValue / 100 / paymentFrequency;
   }
 
   // (1 + r/n) ^ numberOfPayments
-  calculateSubCalculation(numberOfPayments) {
-    return Math.pow(1 + this.annualInterestRate, numberOfPayments);
+  calculateSubCalculationA(frequencyInterestRate, numberOfPayments) {
+    return Math.pow(1 + frequencyInterestRate, numberOfPayments);
+  }
+
+  // subCalculationA (with amortization period numberOfPayments) - 1
+  calculateSubCalculationB(subCalculationAAP) {
+    return subCalculationAAP - 1;
+  }
+
+  calculateMortgagePayment(
+    mortgageAmount,
+    annualInterestRate,
+    subCalculationAAPPayments,
+    subCalculationB
+  ) {
+    return (
+      mortgageAmount *
+      ((annualInterestRate * subCalculationAAPPayments) / subCalculationB)
+    );
+  }
+
+  calculateEndTermBalance(
+    mortgageAmount,
+    subCalculationAAPPayments,
+    frequencyInterestRate,
+    numberOfPaymentsTerm,
+    subCalculationB
+  ) {
+    let subCalculationATermPayments = this.calculateSubCalculationA(
+      frequencyInterestRate,
+      numberOfPaymentsTerm
+    );
+
+    return (
+      (mortgageAmount *
+        (subCalculationAAPPayments - subCalculationATermPayments)) /
+      subCalculationB
+    );
+  }
+
+  calculatePrincipalPayment(mortgageAmount, endBalance) {
+    return mortgageAmount - endBalance;
+  }
+
+  calculateTotalCost(numberOfPayments, mortgagePayment) {
+    return numberOfPayments * mortgagePayment;
+  }
+
+  calculateInterestPayment(totalCost, principalPayment) {
+    return totalCost - principalPayment;
+  }
+
+  getInputtedPaymentFrequencyKey() {
+    return this.paymentFrequencies[this.model.paymentFrequency];
+  }
+
+  getInputtedAmortizationPeriod() {
+    return this.model.amortizationPeriodYears;
+  }
+
+  getInputtedTerm() {
+    return this.model.term;
   }
 
   constructor() {}

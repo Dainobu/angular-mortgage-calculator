@@ -7,7 +7,6 @@ export class UserInput {
     public paymentFrequency: number,
     public term: number,
     public prepaymentAmount: number,
-    public prepaymentFrequency: string,
     public startWithPayment: number
   ) {}
 }
