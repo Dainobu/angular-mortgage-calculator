@@ -28,8 +28,8 @@ describe('Testing form functions', () => {
     it('should calculate fixed periodic payment', () =>
       expect(
         +form
-          .calculateMortgagePayment(100000, 0.004167, 1.28336, 0.28336)
+          .calculateMortgagePayment(100000, 0.004167, 3.48129, 2.48129)
           .toFixed(2)
-      ).toEqual(1887.27));
+      ).toEqual(584.59));
   });
 });
