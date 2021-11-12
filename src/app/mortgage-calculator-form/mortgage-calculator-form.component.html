@@ -46,8 +46,20 @@
           name="interestRate"
           min="0"
           max="100"
+          pattern="^\d+(\.\d{0,2})?$"
         />
         <div class="input-group-addon">%</div>
+      </div>      
+      <div
+        *ngIf="
+          mortgageCalculatorForm.controls['interestRate'].invalid &&
+          (mortgageCalculatorForm.controls['interestRate'].dirty ||
+            mortgageCalculatorForm.controls['interestRate'].touched)
+        "
+        class="alert alert-danger"
+      >
+        Please enter a percent between 0 and 100 with a maximum of 2 decimal places. Enter "." as a decimal
+        separator.
       </div>
     </div>
 
@@ -64,16 +76,6 @@
           {{ amortizationPeriodYears[amorYear] }}
         </option>
       </select>
-      <!-- <select
-        class="form-control"
-        id="amortizationPeriodMonth"
-        [(ngModel)]="model.amortizationPeriodMonths"
-        name="amortizationPeriodMonth"
-      >
-        <option *ngFor="let amorMonth of amortMonthKeys" [value]="amorMonth">
-          {{ amortizationPeriodMonths[amorMonth] }}
-        </option>
-      </select> -->
     </div>
 
     <div class="form-group">
