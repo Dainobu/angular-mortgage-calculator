@@ -1,5 +1,4 @@
 export enum AmortizationPeriodYears {
-  '' = 0,
   '1 Year' = 1,
   '2 Years' = 2,
   '3 Years' = 3,

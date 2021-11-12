@@ -13,25 +13,24 @@ import { AmortizationPeriodYears } from '../amortization-period-years.enum';
 export class MortgageCalculatorFormComponent implements OnInit {
   amortizationPeriodYears = AmortizationPeriodYears;
   amortYearKeys = Object.keys(AmortizationPeriodYears).filter(
-    (f) => !isNaN(Number(f)) && f != ''
+    (f) => !isNaN(Number(f))
   );
-
-  // amortizationPeriodMonths = AmortizationPeriodMonths;
-  // amortMonthKeys = Object.keys(AmortizationPeriodMonths).filter(
-  //   (f) => !isNaN(Number(f)) && f != ''
-  // );
 
   paymentFrequencies = PaymentFrequencies;
   payFreqKeys = Object.keys(PaymentFrequencies).filter(
     (f) => !isNaN(Number(f))
   );
 
-  terms = Terms;
-  termKeys = Object.keys(Terms).filter((f) => !isNaN(Number(f)));
-
   prepaymentFrequencies = ['One time', 'Each year', 'Same as regular payment'];
 
   model = new UserInput(100000.0, 5.0, 25, 0, 12, 5, 0.0, 'One time', 1);
+
+  aY = this.model.amortizationPeriodYears;
+
+  terms = Terms;
+  termKeys = Object.keys(Terms).filter(
+    (f) => !isNaN(Number(f)) && Number(f) <= this.model.amortizationPeriodYears
+  );
 
   submitted = false;
 
@@ -53,6 +52,17 @@ export class MortgageCalculatorFormComponent implements OnInit {
 
   APYears;
   termYears;
+
+  updateTermKeys() {
+    this.termKeys = Object.keys(Terms).filter(
+      (f) =>
+        !isNaN(Number(f)) && Number(f) <= this.model.amortizationPeriodYears
+    );
+
+    if (this.model.amortizationPeriodYears < this.model.term) {
+      this.model.term = null;
+    }
+  }
 
   onSubmit() {
     this.submitted = true;
