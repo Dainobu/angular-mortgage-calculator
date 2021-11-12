@@ -71,7 +71,7 @@
         required
         [(ngModel)]="model.amortizationPeriodYears"
         name="amortizationPeriodYear"
-        (blur)="updateTermKeys()"
+        (click)="updateTermKeys()"
       >
         <option *ngFor="let amorYear of amortYearKeys" [value]="amorYear">
           {{ amortizationPeriodYears[amorYear] }}
