@@ -4,6 +4,7 @@ import { MortgageCalculatorFormComponent } from './mortgage-calculator-form.comp
 
 describe('Testing form functions', () => {
   var form;
+  
   //This will be called before running each spec
   beforeEach(function () {
     form = new MortgageCalculatorFormComponent();
