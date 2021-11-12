@@ -28,7 +28,7 @@ describe('Testing form functions', () => {
     it('should calculate fixed periodic payment', () =>
       expect(
         +form
-          .calculateMortgagePayment(100000, 0.004167, 3.48129, 2.48129)
+          .calculateMortgagePayment(100000, 0.0041667, 3.48129, 2.48129)
           .toFixed(2)
       ).toEqual(584.59));
   });
