@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { UserInput } from '../user-input';
 import { Terms } from '../terms.enum';
 import { PaymentFrequencies } from '../payment-frequencies.enum';
-import { AmortizationPeriodMonths } from '../amortization-period-months.enum';
 import { AmortizationPeriodYears } from '../amortization-period-years.enum';
 
 @Component({
@@ -156,6 +155,7 @@ export class MortgageCalculatorFormComponent implements OnInit {
     return subCalculationAAP - 1;
   }
 
+  // Fixed Periodic Payment = P *[(r/n) * (1 + r/n)^(n*t)] / [(1 + r/n)^(n*t) – 1]
   calculateMortgagePayment(
     mortgageAmount,
     annualInterestRate,
@@ -168,6 +168,7 @@ export class MortgageCalculatorFormComponent implements OnInit {
     );
   }
 
+  // Outstanding Loan Balance = P * [(1 + r/n)^(n*t) – (1 + r/n)^(n*m)] / [(1 + r/n)^(n*t) – 1]
   calculateEndTermBalance(
     mortgageAmount,
     subCalculationAAPPayments,
