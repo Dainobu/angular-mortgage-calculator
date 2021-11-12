@@ -9,26 +9,28 @@
     <div class="form-group">
       <label for="mortgageAmount">Mortgage Amount:</label>
       <input
-        type="text"
+        type="number"
         class="form-control"
         id="mortgageAmount"
         required
         [(ngModel)]="model.mortgageAmount"
         name="mortgageAmount"
+        min="0"
       />
     </div>
 
     <div class="form-group">
       <label for="interestRate">Interest Rate:</label>
       <input
-        type="text"
+        type="number"
         class="form-control"
         id="interestRate"
         required
         [(ngModel)]="model.interestRate"
         name="interestRate"
+        min="0"
       />
-    </div>
+    </div>    
 
     <div class="form-group">
       <label for="amortizationPeriodYear">Amortization Period:</label>
