@@ -38,11 +38,13 @@ export class MortgageCalculatorFormComponent implements OnInit {
   numberOfPaymentsTerm;
   numberOfPaymentsAP;
   annualInterestRate;
-  subCalculation;
+  subCalculationAPPayments;
+  subCalculationTermPayments;
   mortgagePayment;
+  termEndBalance;
   principalPaymentsTerm;
   principalPaymentsAP;
-
+  interestPaymentsTerm;
   interestPaymentsAP;
   totalCostTerm;
   totalCostAP;
@@ -63,21 +65,34 @@ export class MortgageCalculatorFormComponent implements OnInit {
     this.annualInterestRate =
       this.model.interestRate / 100 / this.model.paymentFrequency;
 
-    this.subCalculation = Math.pow(
-      1 + this.annualInterestRate,
+    this.subCalculationAPPayments = this.calculateSubCalculation(
       this.numberOfPaymentsAP
+    );
+
+    this.subCalculationTermPayments = this.calculateSubCalculation(
+      this.numberOfPaymentsTerm
     );
 
     this.mortgagePayment =
       this.model.mortgageAmount *
-      ((this.annualInterestRate * this.subCalculation) /
-        (this.subCalculation - 1));
+      ((this.annualInterestRate * this.subCalculationAPPayments) /
+        (this.subCalculationAPPayments - 1));
+
+    this.termEndBalance =
+      (this.model.mortgageAmount *
+        (this.subCalculationAPPayments - this.subCalculationTermPayments)) /
+      (this.subCalculationAPPayments - 1);
+
+    this.principalPaymentsTerm =
+      this.model.mortgageAmount - this.termEndBalance;
 
     this.principalPaymentsAP = this.model.mortgageAmount;
 
     this.totalCostTerm = this.numberOfPaymentsTerm * this.mortgagePayment;
 
     this.totalCostAP = this.numberOfPaymentsAP * this.mortgagePayment;
+
+    this.interestPaymentsTerm = this.totalCostTerm - this.principalPaymentsTerm;
 
     this.interestPaymentsAP = this.totalCostAP - this.principalPaymentsAP;
 
@@ -86,6 +101,11 @@ export class MortgageCalculatorFormComponent implements OnInit {
     this.APYears = this.model.amortizationPeriodYears;
 
     this.termYears = this.model.term;
+  }
+
+  // (1 + r/n) ^ numberOfPayments
+  calculateSubCalculation(numberOfPayments) {
+    return Math.pow(1 + this.annualInterestRate, numberOfPayments);
   }
 
   constructor() {}

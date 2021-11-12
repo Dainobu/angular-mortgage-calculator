@@ -29,7 +29,8 @@
         "
         class="alert alert-danger"
       >
-        Please enter an currency amount greater than 0. Enter "." as a decimal separator.
+        Please enter an currency amount greater than 0. Enter "." as a decimal
+        separator.
       </div>
     </div>
 
@@ -182,12 +183,12 @@
       </tr>
       <tr>
         <td>Principal Payments</td>
-        <td></td>
+        <td>{{ principalPaymentsTerm | currency }}</td>
         <td>{{ principalPaymentsAP | currency }}</td>
       </tr>
       <tr>
         <td>Interest Payments</td>
-        <td></td>
+        <td>{{ interestPaymentsTerm | currency }}</td>
         <td>{{ interestPaymentsAP | currency }}</td>
       </tr>
       <tr>
@@ -226,14 +227,18 @@
         >.
       </li>
       <li>
-        have paid <b>[TODO]</b> in principal, <b>[TODO]</b> in interest, for a
-        total of <b>{{ totalCostTerm | currency }}</b
+        have paid <b>{{ principalPaymentsTerm | currency }}</b> in principal,
+        <b>{{ interestPaymentsTerm | currency }}</b> in interest, for a total of
+        <b>{{ totalCostTerm | currency }}</b
         >.
       </li>
     </ul>
     <div>At the end of your {{ termYears }}-year term, you will:</div>
     <ul>
-      <li>have a balance of <b>[TODO]</b>.</li>
+      <li>
+        have a balance of <b>{{ termEndBalance | currency }}</b
+        >.
+      </li>
     </ul>
   </div>
 </div>
