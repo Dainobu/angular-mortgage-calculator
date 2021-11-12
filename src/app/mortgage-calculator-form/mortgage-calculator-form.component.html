@@ -23,6 +23,7 @@
       </div>
       <div
         *ngIf="
+          mortgageCalculatorForm.controls['mortgageAmount'] &&
           mortgageCalculatorForm.controls['mortgageAmount'].invalid &&
           (mortgageCalculatorForm.controls['mortgageAmount'].dirty ||
             mortgageCalculatorForm.controls['mortgageAmount'].touched)
@@ -52,6 +53,7 @@
       </div>
       <div
         *ngIf="
+          mortgageCalculatorForm.controls['interestRate'] &&
           mortgageCalculatorForm.controls['interestRate'].invalid &&
           (mortgageCalculatorForm.controls['interestRate'].dirty ||
             mortgageCalculatorForm.controls['interestRate'].touched)
@@ -108,7 +110,10 @@
         </option>
       </select>
       <div
-        *ngIf="mortgageCalculatorForm.controls['term'].errors"
+        *ngIf="
+          mortgageCalculatorForm.controls['term'] &&
+          mortgageCalculatorForm.controls['term'].errors
+        "
         class="alert alert-danger"
       >
         Please select a term.
