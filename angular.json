@@ -15,7 +15,7 @@
           "options": {
             "outputPath": "dist/demo",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "main": "src/main-testing.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
@@ -62,7 +62,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test-testing.ts",
+            "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
